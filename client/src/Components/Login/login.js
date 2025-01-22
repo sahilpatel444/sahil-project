@@ -11,18 +11,21 @@ const Login = () => {
   const { user, setUser } = useContext(InputContext);
   const navigate = useNavigate();
 
+
+
   const handleLoginSuccess = async (credentialResponse) => {
     try {
       const { credential } = credentialResponse;
 
       // Send the token to the backend
       const response = await axios.post(
-        // "http://localhost:5000/api/google-login",
-        `${process.env.REACT_APP_BACKEND_URL}/api/google-login`,
+        "http://localhost:5000/api/google-login",
+        // `${process.env.REACT_APP_BACKEND_URL}/api/google-login`,
         {
           token: credential,
         }
       );
+    
       console.log("User data saved to MongoDB:", response.data);
     } catch (error) {
       console.error("Error during login:", error);
@@ -30,24 +33,20 @@ const Login = () => {
     // console.log(credentialResponse, "Login Successfully");
     const decoded = jwtDecode(credentialResponse.credential);
     console.log(user, "user info");
-
-    // setUser({
-    //   name: decoded.name,
-    //   email: decoded.email,
-    //   picture: decoded.picture,
-    // });
+    
+    
     const userData = {
       name: decoded.name,
       email: decoded.email,
       picture: decoded.picture,
     };
-
+    
+    
+    // Set user state and save to local storage    
     setUser(userData);
-
- 
     localStorage.setItem("user", JSON.stringify(userData));
     navigate("/");
-  };
+  } ;
   const handleLoginFail = () => {
     console.error("Login Fail");
   };
@@ -56,38 +55,10 @@ const Login = () => {
     setUser(null);
     localStorage.removeItem("user");
   };
-  // store data in local storage
-  // React.useEffect(() => {
-  //   const storeUser = localStorage.getItem("user");
-
-  //   if (storeUser) {
-  //     setUser(JSON.parse(storeUser));
-  //   }
-  // }, []);
-
-  // // Fetch users from the backend
-  // useEffect(() => {
-  //   const fetchUsers = async () => {
-  //     try {
-  //       const response = await axios.get("http://localhost:5000/api/users");
-  //       setUser(response.data); // Save the users in state
-  //     } catch (error) {
-  //       console.error("Error fetching users:", error);
-  //     }
-  //   };
-
-  //   fetchUsers();
-  // }, []);
-  // console.log(user,"fetchUsers all")
-
-  // alredy login to navigate
-  //   if (user) {
-  //     return <Navigate to="/" />;
-  //   }
   // console.log(user,"user data")
   return (
     <div>
-      <GoogleOAuthProvider clientId="571743621526-3lpmovu7hm9i31o7chqsa60vt7ikd3a6.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId="571743621526-mbe2mddaadlca0at1p0u3j1p0skfvcac.apps.googleusercontent.com" >
         {/* <div style={{ textAlign: "center" }}>
           <h6>Google Login</h6>
           {!user ? (
