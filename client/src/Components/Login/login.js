@@ -19,8 +19,8 @@ const Login = () => {
 
       // Send the token to the backend
       const response = await axios.post(
-        "http://localhost:5000/api/google-login",
-        // `${process.env.REACT_APP_BACKEND_URL}/api/google-login`,
+        // "http://localhost:5000/api/google-login",
+        `${process.env.REACT_APP_BACKEND_URL}/api/google-login`,
         {
           token: credential,
         }
@@ -58,7 +58,7 @@ const Login = () => {
   // console.log(user,"user data")
   return (
     <div>
-      <GoogleOAuthProvider clientId="571743621526-mbe2mddaadlca0at1p0u3j1p0skfvcac.apps.googleusercontent.com" >
+      <GoogleOAuthProvider clientId='571743621526-mbe2mddaadlca0at1p0u3j1p0skfvcac.apps.googleusercontent.com' >
         {/* <div style={{ textAlign: "center" }}>
           <h6>Google Login</h6>
           {!user ? (

@@ -91,38 +91,18 @@ const Header = () => {
         {/* Left Section: Logo and Navigation */}
         <div className="flex items-center space-x-4 ">
           {/* Logo */}
-          <div className="topNavbar">
+          <div className="topNavbar"><Link to="/">
             <img alt="Your Company" src={logo} className="h-8 w-auto" />
+          </Link>
           </div>
 
           {/* Navigation Links */}
-          {/* <div className="hidden sm:block">
-            <div className="flex space-x-4">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  aria-current={item.current ? "page" : undefined}
-                  className={classNames(
-                    item.current
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                    "rounded-md px-3 py-2 text-sm font-medium"
-                  )}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-          </div> */}
+        
           <Menu as="div" className="relative inline-block text-left">
             <div>
-              <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+              <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-500 hover:bg-gray-900">
                 Projects
-                <ChevronDownIcon
-                  aria-hidden="true"
-                  className="-mr-1 size-5 text-gray-400"
-                />
+                <ChevronDownIcon aria-hidden="true" className="-mr-1 size-5 " />
               </MenuButton>
             </div>
 

@@ -6,7 +6,6 @@ const bodyParser = require("body-parser");
 const { OAuth2Client } = require("google-auth-library");
 const { igdl } = require("btch-downloader");
 
-const instagramGetUrl = require("instagram-url-direct");
 
 dotenv.config();
 

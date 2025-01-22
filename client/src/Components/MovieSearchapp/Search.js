@@ -40,20 +40,6 @@ const MovieSearch = () => {
   };
   console.log(movie, "searchMovie");
 
-
-
-
-  
-  
-  
-  
-// hello trycode
-
-
-  
-  
-  
-  
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       searchMovie(search);
@@ -100,7 +86,7 @@ const MovieSearch = () => {
           <div key={movie.imdbID} className="cardmovie ">
             <img
               src={movie.Poster}
-              class="card-img-top "
+              className="card-img-top "
               alt="poster"
               style={{ height: "300px" }}
             />
