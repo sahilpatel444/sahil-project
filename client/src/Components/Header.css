@@ -43,7 +43,13 @@
 text-align: left;
 display: flex;
 flex-wrap: wrap;
-justify-content: left;
-justify-content: space-around;
-margin-top: 100%;
+/* justify-content: left; */
+/* justify-content: space-around; */
+/* margin-top: 100%; */
+}
+@media only screen and (max-width: 550px){
+.topNavbar{
+  display: none;
+  
+}
 }

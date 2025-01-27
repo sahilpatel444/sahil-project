@@ -57,7 +57,12 @@ nav input{
   align-items: center;
   gap: 11px;
 
-
+}
+@media only screen and (max-width: 550px){
+  
+  .searchBar input{
+    width: 20px;
+  }
 }
 
 nav button{

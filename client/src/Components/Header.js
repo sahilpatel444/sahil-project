@@ -1,53 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-// import React, { useContext } from 'react'
-// import { NavLink } from 'react-router-dom'
-// import './Header.css'
-// import { InputContext } from '../Context/inputContext'
-
-// const Header = () => {
-//   const {theme,toggleTheme}= useContext(InputContext)
-
-//   return (
-//     <>
-//     <div className={theme}>
-
-//     <div className='topnav'>
-
-//   <button className="active">
-//     <NavLink to="/" >News app</NavLink>
-
-//   </button>
-//   <button className="active">
-//     <NavLink to="/notes" >Note app</NavLink>
-
-//   </button>
-//   <button className="active">
-//     <NavLink to="/weather" >Weather app</NavLink>
-
-//   </button>
-
-//     </div>
-
-// <div >
-// <button onClick={toggleTheme}
-//            style={{
-//                 backgroundColor: theme ? "black" : "white",
-//                 color: theme ? "white" : "black",
-
-//                 padding: "10px 20px",
-//                 border: "1px solid gray",
-//                 borderRadius: "5px",
-//                 cursor: "pointer",
-//             }}>
-//             Switch to {theme === "light" ? "Dark" : "Light"} Mode
-//         </button>
-// </div>
-// </div>
-//     </>
-//   )
-// }
-
-// export default Header
 
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import logo from "../assets/image/logo.png";
@@ -75,12 +25,7 @@ const Header = () => {
     setUser,
   } = useContext(InputContext);
 
-  // enter to search value
-  // const handleKeyPress = (e) => {
-  //   if (e.key === "Enter") {
-  //     getdata(search); // Trigger the submit function
-  //   }
-  // };
+ 
   const handleLogout = () => {
     const confirmLogout = window.confirm("Are you sure you want to log out?");
     if (confirmLogout) {
@@ -95,13 +40,13 @@ const Header = () => {
         <div className="flex items-center space-x-4 ">
           {/* Logo */}
           <div className="topNavbar"><Link to="/">
-            <img alt="Your Company" src={logo} className="h-8 w-auto" />
+            <img alt="Your Company" src={logo}  className="hidden md:block h-8 w-auto" />
           </Link>
           </div>
 
           {/* Navigation Links */}
         
-          <Menu as="div" className="relative inline-block text-left">
+          <Menu as="div" className="relative inline-block text-left ">
             <div>
               <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-500 hover:bg-gray-900">
                 Projects
@@ -168,11 +113,12 @@ const Header = () => {
         </div>
 
         {/* Right Section: Search Bar, Theme Icon, Profile */}
-        <div className="flex items-center space-x-4 ">
+        <div className="flex items-center space-x-4">
           {/* Search Bar */}
           <div className="searchBar">
             <input
               className={theme}
+              
               type="text"
               placeholder="Search News"
               onChange={handleInput}
@@ -188,16 +134,7 @@ const Header = () => {
               }}
               // className="w-40 sm:w-64 rounded-md border border-gray-300 bg-gray-700 text-gray-200 px-3 py-1 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {/* <button
-            // style={{ padding: "8px",
-            //   borderRadius: "4px",
-            //   border: "1px solid #ccc",
-            //   outline: "none",}}
-              onClick={() => getdata(search)}
-              className="ml-2 px-3 py-1 rounded-md bg-blue-600 text-white text-sm hover:bg-blue-700 focus:outline-none"
-            >
-              Search
-            </button> */}
+          
           </div>
 
           {/* Theme Toggle */}
@@ -268,3 +205,136 @@ const Header = () => {
 };
 
 export default Header;
+// import React, { useContext, useState } from "react";
+// import { Link } from "react-router-dom";
+// import { InputContext } from "../Context/inputContext";
+// import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+// import { HiMenu, HiX } from "react-icons/hi";
+// import { MdDarkMode } from "react-icons/md";
+// import { FaSun } from "react-icons/fa";
+// import logo from "../assets/image/logo.png";
+// import ProfileLogo from "../assets/image/ProfileLogo.png";
+
+// const Header = () => {
+//   const {
+//     theme,
+//     toggleTheme,
+//     handleInput,
+//     search,
+//     handleKeyPress,
+//     user,
+//     setUser,
+//   } = useContext(InputContext);
+
+//   const [menuOpen, setMenuOpen] = useState(false);
+
+//   const handleLogout = () => {
+//     const confirmLogout = window.confirm("Are you sure you want to log out?");
+//     if (confirmLogout) {
+//       setUser(null);
+//       localStorage.removeItem("user");
+//     }
+//   };
+
+//   return (
+//     <header className="bg-slate-800 text-white shadow-md">
+//       <div className="container mx-auto flex justify-between items-center px-4 py-3">
+//         {/* Logo */}
+//         <div className="flex items-center space-x-4">
+//           <Link to="/">
+//             <img src={logo} alt="Logo" className="h-8 w-auto" />
+//           </Link>
+
+//           {/* Mobile Menu Toggle */}
+//           <button
+//             onClick={() => setMenuOpen(!menuOpen)}
+//             className="md:hidden text-2xl"
+//           >
+//             {menuOpen ? <HiX /> : <HiMenu />}
+//           </button>
+//         </div>
+
+//         {/* Navigation Links */}
+//         <nav
+//           className={`${
+//             menuOpen ? "block" : "hidden"
+//           } md:flex space-x-6 absolute md:static top-16 left-0 w-full bg-slate-800 md:bg-transparent md:w-auto md:top-auto md:left-auto`}
+//         >
+//           <Link to="/" className="block px-4 py-2 md:px-0 md:py-0 hover:text-blue-400">
+//             Home
+//           </Link>
+//           <Link to="/news" className="block px-4 py-2 md:px-0 md:py-0 hover:text-blue-400">
+//             News App
+//           </Link>
+//           <Link to="/weather" className="block px-4 py-2 md:px-0 md:py-0 hover:text-blue-400">
+//             Weather App
+//           </Link>
+//           <Link to="/notes" className="block px-4 py-2 md:px-0 md:py-0 hover:text-blue-400">
+//             Note App
+//           </Link>
+//           <Link to="/movie" className="block px-4 py-2 md:px-0 md:py-0 hover:text-blue-400">
+//             Movie Search
+//           </Link>
+//           <Link to="/downloader" className="block px-4 py-2 md:px-0 md:py-0 hover:text-blue-400">
+//             Instagram Reel Download
+//           </Link>
+//         </nav>
+
+//         {/* Right Section */}
+//         <div className="flex items-center space-x-4">
+//           {/* Search Bar */}
+//           <input
+//             type="text"
+//             placeholder="Search News"
+//             className="hidden md:block px-3 py-2 rounded-md bg-gray-700 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-500"
+//             value={search}
+//             onChange={handleInput}
+//             onKeyDown={handleKeyPress}
+//           />
+
+//           {/* Theme Toggle */}
+//           <button
+//             onClick={toggleTheme}
+//             className="p-2 rounded-full bg-gray-700 hover:text-yellow-400"
+//           >
+//             {theme === "dark" ? <MdDarkMode size={24} /> : <FaSun size={24} />}
+//           </button>
+
+//           {/* Profile */}
+//           <Menu as="div" className="relative">
+//             <MenuButton className="relative flex rounded-full bg-gray-800 text-sm">
+//               <img
+//                 src={user ? user.picture : ProfileLogo}
+//                 alt="Profile"
+//                 className="h-8 w-8 rounded-full"
+//               />
+//             </MenuButton>
+//             <MenuItems className="absolute right-0 mt-2 w-48 bg-white text-black rounded-md shadow-lg">
+//               <MenuItem>
+//                 <Link
+//                   to="/login"
+//                   className="block px-4 py-2 hover:bg-gray-200"
+//                 >
+//                   {user ? `Welcome, ${user.name}` : "Guest User"}
+//                 </Link>
+//               </MenuItem>
+//               {user && (
+//                 <MenuItem>
+//                   <button
+//                     onClick={handleLogout}
+//                     className="w-full text-left px-4 py-2 hover:bg-gray-200"
+//                   >
+//                     Logout
+//                   </button>
+//                 </MenuItem>
+//               )}
+//             </MenuItems>
+//           </Menu>
+//         </div>
+//       </div>
+//     </header>
+//   );
+// };
+
+// export default Header;
+
