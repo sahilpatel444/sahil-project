@@ -82,8 +82,11 @@ const Header = () => {
   //   }
   // };
   const handleLogout = () => {
-    setUser(null);
-    localStorage.removeItem("user");
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
+    if (confirmLogout) {
+      setUser(null); // Clear user state
+      localStorage.removeItem("user"); // Remove user data from localStorage
+    }
   };
   return (
     <>
@@ -235,18 +238,27 @@ const Header = () => {
                   to="/login"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
-                  {!user ? <> Your Profile </> : <> Welcome, {user?.name}</>}
+                  {!user ? <> Guest User </> : <> Welcome, {user?.name}</>}
                 </Link>
               </MenuItem>
 
+              <MenuItem>
+                <Link to="/login"
+                
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  {!user ? <>Login</> : <></>}
+                </Link>
+              </MenuItem>
               <MenuItem>
                 <Link
                   onClick={handleLogout}
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
-                  {!user ? <>Login</> : <>Log Out</>}
+                  {!user ? <></> : <>Log Out</>}
                 </Link>
               </MenuItem>
+             
             </MenuItems>
           </Menu>
         </div>

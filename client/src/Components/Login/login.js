@@ -52,8 +52,11 @@ const Login = () => {
   };
 
   const handleLogout = () => {
-    setUser(null);
-    localStorage.removeItem("user");
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
+    if (confirmLogout) {
+      setUser(null); // Clear user state
+      localStorage.removeItem("user"); // Remove user data from localStorage
+    }
   };
   // console.log(user,"user data")
   return (
