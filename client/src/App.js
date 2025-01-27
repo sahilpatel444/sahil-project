@@ -11,6 +11,7 @@ import Login from "./Components/Login/login.js"
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Home from "./Components/Home.js";
 import Downloader from "./Components/VideoDownload/Downloader.js";
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   const clientId = "571743621526-3lpmovu7hm9i31o7chqsa60vt7ikd3a6.apps.googleusercontent.com";
@@ -19,6 +20,7 @@ function App() {
       <BrowserRouter>
         <InputProvider>
         <GoogleOAuthProvider clientId={clientId}>
+            <Analytics />
             <Header />
      
           <Routes>
