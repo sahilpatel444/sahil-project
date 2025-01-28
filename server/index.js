@@ -6,7 +6,6 @@ const bodyParser = require("body-parser");
 const { OAuth2Client } = require("google-auth-library");
 const { igdl } = require("btch-downloader");
 
-
 dotenv.config();
 
 const app = express();
@@ -15,8 +14,8 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-  res.send('Server api running');
+app.get("/", (req, res) => {
+  res.send("Server api running");
 });
 
 // chat bot server
@@ -24,8 +23,8 @@ app.get('/', (req, res) => {
 // mongodb connect
 mongoose
   .connect(process.env.MONGO_DB, {
-    // useNewUrlParser: true,
-    // useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("Connection error:", err));
@@ -52,12 +51,24 @@ app.post("/api/google-login", async (req, res) => {
 
     let user = await User.findOne({ googleId: sub });
     if (!user) {
+      console.log("User not found, creating new user...");
       user = new User({ googleId: sub, name, email, picture });
-      await user.save();
-    }
 
-    res.status(200).json(user);
+      try {
+        await user.save();
+        console.log("User saved:", user);
+      } catch (saveError) {
+        console.error("Error saving user to MongoDB:", saveError);
+        return res
+          .status(500)
+          .json({ error: "Failed to save user to database" });
+      }
+    } else {
+      console.log("User already exists:", user);
+    }
+    res.status(200).json(user); // Send back the user object as response
   } catch (error) {
+    console.error("Error during login:", error);
     res.status(400).json({ error: "Invalid token" });
   }
 });
@@ -70,6 +81,7 @@ app.get("/api/users", async (req, res) => {
     const users = await User.find(); // Fetch all users from MongoDB
     res.json(users);
   } catch (error) {
+    console.error("Failed to fetch users:", error);
     res.status(500).json({ error: "Failed to fetch users" });
   }
 });
@@ -105,5 +117,5 @@ app.post("/api/fetch-instagram", async (req, res) => {
   // }
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

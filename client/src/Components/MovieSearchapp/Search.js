@@ -6,13 +6,16 @@ import "./movie.css";
 const MovieSearch = () => {
   const [search, setSearch] = useState("pushpa");
   const [movie, setMovie] = useState([]);
+  const [loading ,setLoading]= useState(false)
 
   // const API_KEY = "b92cd346";
   const API_KEY = "b5382e81";
 
 
 
-  const searchMovie = async () => {
+  const searchMovie = async (e) => {
+    setLoading(true);
+
 
     if (!search) return;
     try {
@@ -36,6 +39,8 @@ const MovieSearch = () => {
     } catch (error) {
       console.error("Error fatching data", error);
       setMovie([])
+    } finally {
+      setLoading(false);
     }
   };
   console.log(movie, "searchMovie");
@@ -43,6 +48,7 @@ const MovieSearch = () => {
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       searchMovie(search);
+      
     }
   };
   useEffect(() => {
@@ -53,6 +59,7 @@ const MovieSearch = () => {
    useEffect(() => {
         const timer = setTimeout(() => {
           searchMovie(search);
+         
         }, 300); // 300ms delay
         return () => clearTimeout(timer); // Clear timer on input change
               
@@ -99,6 +106,16 @@ const MovieSearch = () => {
           </div>
         ))}
       </div>
+      {/* page loader in background blur */}
+      {loading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="flex flex-col items-center">
+            <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            <span className="text-white mt-4 font-medium">Loading...</span>
+          </div>
+        </div>
+      )}
+   
     </>
   );
 };

@@ -5,10 +5,11 @@ import { MdDarkMode } from "react-icons/md";
 // import { MdOutlineDarkMode } from "react-icons/md";
 import { FaSun } from "react-icons/fa";
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { InputContext } from "../Context/inputContext";
 import ProfileLogo from "../assets/image/ProfileLogo.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import {  HiSearch } from "react-icons/hi";
 
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
@@ -24,6 +25,8 @@ const Header = () => {
     user,
     setUser,
   } = useContext(InputContext);
+  const [searchOpen, setSearchOpen] = useState(false); // Track search input visibility
+ const location = useLocation() // To track the current route
 
  
   const handleLogout = () => {
@@ -32,7 +35,14 @@ const Header = () => {
       setUser(null); // Clear user state
       localStorage.removeItem("user"); // Remove user data from localStorage
     }
+    
   };
+  useEffect(() => {
+    // Hide the search bar when the location changes (navigating to another page)
+    setSearchOpen(false);
+  }, [location]);
+
+
   return (
     <>
       <div className="relative flex h-16 justify-between items-center px-4 bg-slate-800 ">
@@ -115,7 +125,7 @@ const Header = () => {
         {/* Right Section: Search Bar, Theme Icon, Profile */}
         <div className="flex items-center space-x-4">
           {/* Search Bar */}
-          <div className="searchBar">
+          {/* <div className="searchBar">
             <input
               className={theme}
               
@@ -135,7 +145,24 @@ const Header = () => {
               // className="w-40 sm:w-64 rounded-md border border-gray-300 bg-gray-700 text-gray-200 px-3 py-1 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           
-          </div>
+          </div> */}
+          <button
+            onClick={() => setSearchOpen(!searchOpen)} // Toggle the search input field
+            className="p-2 rounded-full bg-gray-700 text-white hover:text-yellow-400 focus:outline-none"
+          >
+            <HiSearch size={24} />
+          </button>
+            {/* Conditional Search Input */}
+            {searchOpen && (
+            <input
+              type="text"
+              placeholder="Search News"
+              className="px-3 py-2 rounded-md bg-gray-700 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-500"
+              value={search}
+              onChange={handleInput}
+              onKeyDown={handleKeyPress}
+            />
+          )}
 
           {/* Theme Toggle */}
           <button
@@ -205,136 +232,3 @@ const Header = () => {
 };
 
 export default Header;
-// import React, { useContext, useState } from "react";
-// import { Link } from "react-router-dom";
-// import { InputContext } from "../Context/inputContext";
-// import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-// import { HiMenu, HiX } from "react-icons/hi";
-// import { MdDarkMode } from "react-icons/md";
-// import { FaSun } from "react-icons/fa";
-// import logo from "../assets/image/logo.png";
-// import ProfileLogo from "../assets/image/ProfileLogo.png";
-
-// const Header = () => {
-//   const {
-//     theme,
-//     toggleTheme,
-//     handleInput,
-//     search,
-//     handleKeyPress,
-//     user,
-//     setUser,
-//   } = useContext(InputContext);
-
-//   const [menuOpen, setMenuOpen] = useState(false);
-
-//   const handleLogout = () => {
-//     const confirmLogout = window.confirm("Are you sure you want to log out?");
-//     if (confirmLogout) {
-//       setUser(null);
-//       localStorage.removeItem("user");
-//     }
-//   };
-
-//   return (
-//     <header className="bg-slate-800 text-white shadow-md">
-//       <div className="container mx-auto flex justify-between items-center px-4 py-3">
-//         {/* Logo */}
-//         <div className="flex items-center space-x-4">
-//           <Link to="/">
-//             <img src={logo} alt="Logo" className="h-8 w-auto" />
-//           </Link>
-
-//           {/* Mobile Menu Toggle */}
-//           <button
-//             onClick={() => setMenuOpen(!menuOpen)}
-//             className="md:hidden text-2xl"
-//           >
-//             {menuOpen ? <HiX /> : <HiMenu />}
-//           </button>
-//         </div>
-
-//         {/* Navigation Links */}
-//         <nav
-//           className={`${
-//             menuOpen ? "block" : "hidden"
-//           } md:flex space-x-6 absolute md:static top-16 left-0 w-full bg-slate-800 md:bg-transparent md:w-auto md:top-auto md:left-auto`}
-//         >
-//           <Link to="/" className="block px-4 py-2 md:px-0 md:py-0 hover:text-blue-400">
-//             Home
-//           </Link>
-//           <Link to="/news" className="block px-4 py-2 md:px-0 md:py-0 hover:text-blue-400">
-//             News App
-//           </Link>
-//           <Link to="/weather" className="block px-4 py-2 md:px-0 md:py-0 hover:text-blue-400">
-//             Weather App
-//           </Link>
-//           <Link to="/notes" className="block px-4 py-2 md:px-0 md:py-0 hover:text-blue-400">
-//             Note App
-//           </Link>
-//           <Link to="/movie" className="block px-4 py-2 md:px-0 md:py-0 hover:text-blue-400">
-//             Movie Search
-//           </Link>
-//           <Link to="/downloader" className="block px-4 py-2 md:px-0 md:py-0 hover:text-blue-400">
-//             Instagram Reel Download
-//           </Link>
-//         </nav>
-
-//         {/* Right Section */}
-//         <div className="flex items-center space-x-4">
-//           {/* Search Bar */}
-//           <input
-//             type="text"
-//             placeholder="Search News"
-//             className="hidden md:block px-3 py-2 rounded-md bg-gray-700 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-500"
-//             value={search}
-//             onChange={handleInput}
-//             onKeyDown={handleKeyPress}
-//           />
-
-//           {/* Theme Toggle */}
-//           <button
-//             onClick={toggleTheme}
-//             className="p-2 rounded-full bg-gray-700 hover:text-yellow-400"
-//           >
-//             {theme === "dark" ? <MdDarkMode size={24} /> : <FaSun size={24} />}
-//           </button>
-
-//           {/* Profile */}
-//           <Menu as="div" className="relative">
-//             <MenuButton className="relative flex rounded-full bg-gray-800 text-sm">
-//               <img
-//                 src={user ? user.picture : ProfileLogo}
-//                 alt="Profile"
-//                 className="h-8 w-8 rounded-full"
-//               />
-//             </MenuButton>
-//             <MenuItems className="absolute right-0 mt-2 w-48 bg-white text-black rounded-md shadow-lg">
-//               <MenuItem>
-//                 <Link
-//                   to="/login"
-//                   className="block px-4 py-2 hover:bg-gray-200"
-//                 >
-//                   {user ? `Welcome, ${user.name}` : "Guest User"}
-//                 </Link>
-//               </MenuItem>
-//               {user && (
-//                 <MenuItem>
-//                   <button
-//                     onClick={handleLogout}
-//                     className="w-full text-left px-4 py-2 hover:bg-gray-200"
-//                   >
-//                     Logout
-//                   </button>
-//                 </MenuItem>
-//               )}
-//             </MenuItems>
-//           </Menu>
-//         </div>
-//       </div>
-//     </header>
-//   );
-// };
-
-// export default Header;
-

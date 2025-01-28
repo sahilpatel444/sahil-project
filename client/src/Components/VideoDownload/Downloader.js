@@ -6,7 +6,7 @@ const Downloader = () => {
   const [data, setData] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  
+
   const fetchInstagramData = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -17,10 +17,9 @@ const Downloader = () => {
       const response = await axios.post(
         // "http://localhost:5000/api/fetch-instagram",
         `${process.env.REACT_APP_BACKEND_URL}/api/fetch-instagram`,
-        { url ,}
+        { url }
       );
       setData(response.data);
-     
     } catch (err) {
       setError("Error fetching Instagram data");
       console.error(err);
@@ -29,9 +28,9 @@ const Downloader = () => {
     }
   };
 
-   useEffect(() => {
-      document.title = "Project - Download app";
-    }, []);
+  useEffect(() => {
+    document.title = "Project - Download app";
+  }, []);
 
   console.log(data, "data");
   return (
@@ -55,7 +54,6 @@ const Downloader = () => {
           type="text"
           placeholder="Enter Instagram URL"
           value={url}
-          
           onChange={(e) => setUrl(e.target.value)}
           style={{
             width: "60%",
@@ -64,10 +62,9 @@ const Downloader = () => {
             border: "1px solid #ccc",
             borderRadius: "8px",
             outline: "none",
-            
           }}
         />
-        
+
         <button
           type="submit"
           style={{
@@ -81,6 +78,17 @@ const Downloader = () => {
         >
           {loading ? "Loading..." : "Fetch Data"}
         </button>
+        {/* page loader in background blur */}
+        {loading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="flex flex-col items-center">
+            <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            <span className="text-white mt-4 font-medium">Loading...</span>
+          </div>
+        </div>
+      )}
+   
+  
       </form>
       {error && <p style={{ color: "red", fontSize: "1.1rem" }}>{error}</p>}
       {data && (
@@ -107,11 +115,11 @@ const Downloader = () => {
             src={data.owner.profile_pic_url}
             alt="User Profile"
           /> */}
-          {data  && (
+          {data && (
             <div>
-              <img alt="img"
+              <img
+                alt="img"
                 src={data[0].thumbnail}
-               
                 style={{
                   width: "100%",
                   maxWidth: "400px",

@@ -1,4 +1,4 @@
-import React, { useContext, } from "react";
+import React, { useContext } from "react";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { InputContext } from "../../Context/inputContext";
@@ -11,21 +11,18 @@ const Login = () => {
   const { user, setUser } = useContext(InputContext);
   const navigate = useNavigate();
 
-
-
   const handleLoginSuccess = async (credentialResponse) => {
     try {
       const { credential } = credentialResponse;
 
       // Send the token to the backend
       const response = await axios.post(
-        // "http://localhost:5000/api/google-login",
         `${process.env.REACT_APP_BACKEND_URL}/api/google-login`,
         {
           token: credential,
         }
       );
-    
+
       console.log("User data saved to MongoDB:", response.data);
     } catch (error) {
       console.error("Error during login:", error);
@@ -33,20 +30,18 @@ const Login = () => {
     // console.log(credentialResponse, "Login Successfully");
     const decoded = jwtDecode(credentialResponse.credential);
     console.log(user, "user info");
-    
-    
+
     const userData = {
       name: decoded.name,
       email: decoded.email,
       picture: decoded.picture,
     };
-    
-    
-    // Set user state and save to local storage    
+
+    // Set user state and save to local storage
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
     navigate("/");
-  } ;
+  };
   const handleLoginFail = () => {
     console.error("Login Fail");
   };
@@ -61,7 +56,7 @@ const Login = () => {
   // console.log(user,"user data")
   return (
     <div>
-      <GoogleOAuthProvider clientId='571743621526-mbe2mddaadlca0at1p0u3j1p0skfvcac.apps.googleusercontent.com' >
+      <GoogleOAuthProvider clientId="571743621526-mbe2mddaadlca0at1p0u3j1p0skfvcac.apps.googleusercontent.com">
         {/* <div style={{ textAlign: "center" }}>
           <h6>Google Login</h6>
           {!user ? (
@@ -102,14 +97,14 @@ const Login = () => {
         <div
           style={{
             textAlign: "center",
-         
+
             padding: "20px",
             backgroundColor: "#f7f7f7",
             borderRadius: "10px",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             maxWidth: "400px",
             margin: "auto",
-            marginTop:"50px"
+            marginTop: "50px",
           }}
         >
           <h6 style={{ fontSize: "1.5rem", color: "#333" }}>Google Login</h6>
@@ -165,7 +160,6 @@ const Login = () => {
                   fontSize: "1rem",
                   transition: "background-color 0.3s",
                 }}
-              
               >
                 Logout
               </button>
