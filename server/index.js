@@ -11,7 +11,13 @@ dotenv.config();
 const app = express();
 
 // middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://sahil-project.vercel.app"], // Add your frontend URLs here
+    methods: ["GET", "POST"],
+    credentials: true, // If using cookies
+  })
+);
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
@@ -23,8 +29,8 @@ app.get("/", (req, res) => {
 // mongodb connect
 mongoose
   .connect(process.env.MONGO_DB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+    // useNewUrlParser: true,
+    // useUnifiedTopology: true,
   })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("Connection error:", err));
@@ -56,7 +62,7 @@ app.post("/api/google-login", async (req, res) => {
 
       try {
         await user.save();
-        console.log("User saved:", user);
+        console.log("User saved:");
       } catch (saveError) {
         console.error("Error saving user to MongoDB:", saveError);
         return res
